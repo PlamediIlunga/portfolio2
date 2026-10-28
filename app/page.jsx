@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Loader, Cursor, Progress, Nav, Field } from "../components/UI";
-import { Hero, About, Projects, Skills, Experience, Contact } from "../components/Sections";
+import { Hero, About, Projects, OngoingProjects, Skills, Experience, Contact } from "../components/Sections";
 
 export default function Home() {
   const [ready, setReady] = useState(false);
@@ -17,6 +17,7 @@ export default function Home() {
         <Hero ready={ready} />
         <About />
         <Projects />
+        <OngoingProjects />
         <Skills />
         <Experience />
         <Contact />

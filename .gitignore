@@ -8,6 +8,8 @@ out
 # variables d'environnement
 .env
 .env*.local
+.env.*
+!.env.example
 
 # divers
 .DS_Store

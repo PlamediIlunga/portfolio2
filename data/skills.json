@@ -1,0 +1,7 @@
+[
+  { "name": "Frontend", "items": ["React", "Next.js", "TypeScript", "JavaScript", "SCSS", "Tailwind", "Svelte", "HTML5"] },
+  { "name": "Backend", "items": ["ASP.NET Core", "C#", "Node.js", "REST API", "JWT", "Python"] },
+  { "name": "Bases de données", "items": ["MySQL", "MariaDB", "SQL Server", "MongoDB", "Entity Framework"] },
+  { "name": "DevOps & outils", "items": ["Git / GitHub", "Linux / Debian", "Nginx", "Docker", "Vercel", "Azure", "Playwright", "Postman"] },
+  { "name": "Architecture", "items": ["Clean Architecture", "SOLID", "MVC", "POO", "Agile / Scrum", "UI / UX", "Sécurité web"] }
+]

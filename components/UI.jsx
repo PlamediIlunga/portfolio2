@@ -78,16 +78,30 @@ export function Progress() {
   return <motion.div className="progress" style={{ scaleX: s }} />;
 }
 
-const links = [["À propos", "about"], ["Projets", "projects"], ["Compétences", "skills"], ["Parcours", "experience"], ["Contact", "contact"]];
+const links = [["À propos", "about"], ["Projets", "projects"], ["En cours", "ongoing"], ["Compétences", "skills"], ["Parcours", "experience"], ["Contact", "contact"]];
 
 export function Nav() {
   const [hide, setHide] = useState(false);
+  const [theme, setTheme] = useState("dark");
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", (v) => setHide(v > (Nav.last || 0) && v > 200) || (Nav.last = v));
+  useEffect(() => {
+    const stored = localStorage.getItem("portfolio-theme");
+    const value = stored || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    document.documentElement.dataset.theme = value;
+    setTheme(value);
+  }, []);
+  const switchTheme = () => {
+    const value = theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = value;
+    localStorage.setItem("portfolio-theme", value);
+    setTheme(value);
+  };
   return (
     <motion.header className="nav" animate={{ y: hide ? -100 : 0 }} transition={{ duration: 0.5, ease }}>
       <a href="#top" className="nav__logo">PI</a>
       <nav>{links.map(([l, id]) => <a key={id} href={`#${id}`}>{l}</a>)}</nav>
+      <button type="button" className="theme-toggle" onClick={switchTheme} aria-label={theme === "dark" ? "Activer le mode clair" : "Activer le mode sombre"} title={theme === "dark" ? "Mode clair" : "Mode sombre"}>{theme === "dark" ? "☼" : "◐"}</button>
     </motion.header>
   );
 }

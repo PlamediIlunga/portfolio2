@@ -1,0 +1,5 @@
+[
+  { "when": "2025", "role": "Développeur web full stack — stage", "where": "Cégep de Rivière-du-Loup", "points": ["Interfaces React / Next.js interactives et responsives", "APIs REST en ASP.NET Core et logique métier sécurisée", "Tests unitaires et E2E avec Playwright", "HTTPS, déploiements automatisés, refactorisation en architecture Clean"] },
+  { "when": "2024", "role": "Opérateur informatique", "where": "CSS de Kamouraska – Rivière-du-Loup", "points": ["Installation et configuration de postes, imprimantes et logiciels", "Gestion des comptes avec Active Directory", "Support aux utilisateurs et résolution de billets", "Maintenance et inventaire du parc matériel"] },
+  { "when": "2022 – 2025", "role": "DEC en Techniques de l'informatique", "where": "Cégep de Rivière-du-Loup", "points": ["Nomination au méritas — Prix de la Rigueur 2025", "7 bourses d'exemption de frais de scolarité", "Bourse d'encouragement à la réussite (Fondation du Cégep, 2024)"] }
+]

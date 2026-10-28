@@ -1,15 +1,18 @@
-$bg: #050b16;
-$fg: #e8f1f5;
-$muted: #8497a8;
-$aurora: #4de3c1;
-$violet: #9b7bff;
-$ice: #5cb8ff;
-$line: rgba(255, 255, 255, 0.1);
+$bg: var(--bg);
+$fg: var(--fg);
+$muted: var(--muted);
+$aurora: var(--aurora);
+$violet: var(--violet);
+$ice: var(--ice);
+$line: var(--line);
 $ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+:root { --bg: #050b16; --fg: #e8f1f5; --muted: #8497a8; --aurora: #4de3c1; --violet: #9b7bff; --ice: #5cb8ff; --line: rgba(255,255,255,.12); --panel: rgba(10,20,36,.72); --card: #0a1424; --text-soft: #b9c8d3; color-scheme: dark; }
+:root[data-theme="light"] { --bg: #edf3f0; --fg: #11231e; --muted: #53665f; --aurora: #087c65; --violet: #6d4cc9; --ice: #1976a4; --line: rgba(17,35,30,.16); --panel: rgba(255,255,255,.70); --card: #f8fcfa; --text-soft: #40534c; color-scheme: light; }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { background: $bg; color: $fg; font-family: var(--f-display), system-ui, sans-serif; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+body { background: $bg; color: $fg; font-family: var(--f-display), system-ui, sans-serif; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; transition: background-color .45s $ease, color .45s $ease; }
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
 ::selection { background: $aurora; color: $bg; }
@@ -35,6 +38,8 @@ main { position: relative; z-index: 2; }
   &__logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -0.05em; }
   nav { display: flex; gap: 1.8rem; font-size: 0.85rem; a { position: relative; &::after { content: ""; position: absolute; left: 0; bottom: -4px; height: 1px; width: 100%; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.5s $ease; } &:hover::after { transform: scaleX(1); transform-origin: left; } } }
   @media (max-width: 760px) { nav a:not(:last-child) { display: none; } } }
+.theme-toggle { width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 1px solid currentColor; background: transparent; color: inherit; font-size: 1.15rem; transition: transform .35s $ease, background .35s; }
+.theme-toggle:hover { transform: rotate(24deg); background: rgba(255,255,255,.15); }
 
 .btn { display: inline-block; padding: 1rem 1.8rem; border-radius: 99px; background: $fg; color: $bg; font-weight: 600; border: 1px solid $fg; font-family: inherit; font-size: 1rem; transition: background 0.4s, color 0.4s;
   &:hover { background: $aurora; border-color: $aurora; }
@@ -46,7 +51,7 @@ main { position: relative; z-index: 2; }
 /* Hero */
 .hero { min-height: 100vh; position: relative; display: flex; align-items: flex-end; padding: 8rem clamp(1rem, 5vw, 4rem) 5rem; overflow: hidden;
   &__in { position: relative; z-index: 2; width: 100%; max-width: 1400px; margin: 0 auto; }
-  h1 { font-size: clamp(4.5rem, 17vw, 17rem); line-height: 0.85; letter-spacing: -0.06em; font-weight: 800; margin: 1.5rem 0 3rem; }
+  h1 { font-size: clamp(3.5rem, 11vw, 10.5rem); line-height: 0.88; letter-spacing: -0.06em; font-weight: 800; margin: 1.5rem 0 2.2rem; }
   &__line { display: block; padding-right: 0.1em; }
   &__avail { font-family: var(--f-mono); font-size: 0.85rem; color: $muted; display: flex; align-items: center; gap: 0.7rem;
     b { width: 9px; height: 9px; border-radius: 50%; background: $aurora; box-shadow: 0 0 0 0 rgba(77, 227, 193, 0.6); animation: ping 2s infinite; } }
@@ -71,7 +76,7 @@ main { position: relative; z-index: 2; }
 .stats { display: flex; gap: 3rem; margin-top: 3rem; flex-wrap: wrap;
   strong { display: block; font-size: 3.4rem; font-weight: 700; letter-spacing: -0.04em; color: $aurora; line-height: 1; }
   span { font-size: 0.8rem; color: $muted; } }
-.code { border: 1px solid $line; border-radius: 14px; background: rgba(8, 18, 32, 0.7); backdrop-filter: blur(12px); overflow: hidden; align-self: start;
+.code { border: 1px solid $line; border-radius: 14px; background: var(--panel); backdrop-filter: blur(12px); overflow: hidden; align-self: start;
   &__bar { display: flex; align-items: center; gap: 6px; padding: 0.8rem 1rem; border-bottom: 1px solid $line; i { width: 10px; height: 10px; border-radius: 50%; background: #3a4a5c; } span { margin-left: 0.6rem; font-size: 0.75rem; color: $muted; } }
   pre { padding: 1.4rem; font-size: 0.85rem; line-height: 1.8; color: $ice; overflow-x: auto; } }
 
@@ -79,7 +84,7 @@ main { position: relative; z-index: 2; }
 .stack { position: relative; }
 .pcard { position: sticky; margin-bottom: 8vh; height: min(520px, 70vh);
   &__in { position: relative; display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: clamp(1.4rem, 3vw, 2.6rem); border-radius: 28px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.12);
-    background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--a) 32%, transparent), transparent 60%), #0a1424;
+    background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--a) 32%, transparent), transparent 60%), var(--card);
     transition: transform 0.25s ease-out, border-color 0.4s; &:hover { border-color: var(--a); .pcard__go { background: var(--a); color: $bg; transform: rotate(45deg); } } }
   &__ghost { position: absolute; right: -2%; bottom: -12%; font-size: clamp(8rem, 24vw, 22rem); font-weight: 800; letter-spacing: -0.07em; line-height: 1; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--a) 40%, transparent); pointer-events: none; white-space: nowrap; }
   &__top { display: flex; justify-content: space-between; align-items: center; position: relative; }
@@ -90,6 +95,14 @@ main { position: relative; z-index: 2; }
 .pill { font-size: 0.78rem; padding: 0.35rem 0.9rem; border-radius: 99px; border: 1px solid var(--a); color: var(--a); }
 
 /* Skills */
+.ongoing { position: relative; }
+.ongoing__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.ongoing__card { min-height: 260px; padding: 1.8rem; border: 1px solid $line; border-radius: 20px; background: linear-gradient(135deg, color-mix(in srgb, $aurora 13%, var(--panel)), var(--panel)); position: relative; overflow: hidden; transition: transform .5s $ease, border-color .4s; }
+.ongoing__card::after { content: "BUILDING"; position: absolute; right: -1rem; bottom: -2rem; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, $aurora 34%, transparent); font-size: 5rem; font-weight: 800; letter-spacing: -.07em; pointer-events: none; }
+.ongoing__card:hover { transform: translateY(-7px); border-color: $aurora; }
+.ongoing__top { display:flex; justify-content:space-between; align-items:center; font-family:var(--f-mono); color:$muted; font-size:.78rem; }
+.ongoing__top .pill { display:inline-flex; align-items:center; gap:.45rem; }.ongoing__top .pill i { width:7px; height:7px; border-radius:50%; background:$aurora; box-shadow:0 0 0 0 color-mix(in srgb, $aurora 70%, transparent); animation: ping 2s infinite; }
+.ongoing__card h3 { margin: 2rem 0 .7rem; font-size: clamp(2rem,5vw,3.6rem); letter-spacing:-.05em; position:relative; z-index:1; }.ongoing__card p { max-width:48ch; color:var(--text-soft); position:relative; z-index:1; }.ongoing__card ul { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:1.1rem; position:relative; z-index:1; }.ongoing__card li { padding:.25rem .7rem; background:color-mix(in srgb,var(--fg) 8%,transparent); border-radius:99px; font-size:.8rem; }.ongoing__link { display:inline-flex; gap:.5rem; margin-top:1.4rem; color:$aurora; position:relative; z-index:1; }.ongoing__link span { transition:transform .3s $ease; }.ongoing__link:hover span { transform:translate(3px,-3px); }
 .marquees { margin: 0 calc(-1 * clamp(1rem, 5vw, 4rem)) 4rem; display: grid; gap: 1rem; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
 .marquee { overflow: hidden; div { display: flex; gap: 1rem; width: max-content; animation: slide 40s linear infinite; }
   &.rev div { animation-direction: reverse; animation-duration: 50s; }
@@ -97,7 +110,7 @@ main { position: relative; z-index: 2; }
   span { font-size: clamp(1.6rem, 4vw, 3rem); font-weight: 600; letter-spacing: -0.03em; padding: 0.4rem 1.6rem; border: 1px solid $line; border-radius: 99px; white-space: nowrap; transition: all 0.4s; &:hover { background: $aurora; color: $bg; border-color: $aurora; } } }
 @keyframes slide { to { transform: translateX(-50%); } }
 .sgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
-.scard { padding: 1.8rem; border: 1px solid $line; border-radius: 20px; background: rgba(10, 20, 36, 0.6); transition: border-color 0.4s, transform 0.5s $ease; &:hover { border-color: $aurora; transform: translateY(-6px); }
+.scard { padding: 1.8rem; border: 1px solid $line; border-radius: 20px; background: var(--panel); transition: border-color 0.4s, transform 0.5s $ease; &:hover { border-color: $aurora; transform: translateY(-6px); }
   h3 { font-size: 1.3rem; margin-bottom: 1rem; color: $aurora; }
   ul { display: flex; flex-wrap: wrap; gap: 0.45rem; li { font-size: 0.85rem; color: #b9c8d3; padding: 0.25rem 0.7rem; background: rgba(255, 255, 255, 0.06); border-radius: 8px; } } }
 
@@ -120,5 +133,6 @@ main { position: relative; z-index: 2; }
 form { display: grid; gap: 1.2rem; label { display: grid; gap: 0.4rem; font-size: 0.85rem; color: $muted; }
   input, textarea { background: transparent; border: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.25); padding: 0.7rem 0; color: $fg; font: inherit; font-size: 1.05rem; resize: vertical; transition: border-color 0.3s; &:focus { outline: 0; border-color: $aurora; } }
   .btn { justify-self: start; margin-top: 0.5rem; } }
+.honeypot { position:absolute; left:-10000px; opacity:0; }.form-status { min-height:1.5rem; color:$muted; font-size:.9rem; }.form-status.success { color:$aurora; }.form-status.error { color:#ff8c9c; }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } html { scroll-behavior: auto; } }

@@ -1,0 +1,7 @@
+[
+  { "title": "Find My FIJ", "kind": "Application web", "url": "https://find-my-fij.vercel.app/", "color": "#4de3c1", "desc": "Trouve la FIJ la plus proche en un instant : géolocalisation, recherche par adresse, filtres avancés et authentification.", "tags": ["Next.js", "TypeScript", "SCSS", "Supabase", "Nominatim"] },
+  { "title": "Lia Cuisine", "kind": "Site vitrine", "url": "https://liacuisine.vercel.app/", "color": "#ffb454", "desc": "Vitrine d'un restaurant africain de Gatineau : design system SCSS, menu dynamique via API route, formulaire avec anti-spam.", "tags": ["Next.js", "TypeScript", "SCSS", "API Routes"] },
+  { "title": "FireSecurityShop API", "kind": "Backend", "url": "https://firesecurityshop.duckdns.org/swagger/index.html", "color": "#9b7bff", "desc": "API REST ASP.NET Core 8 en Clean Architecture : utilisateurs, commandes, JWT. Déployée sur un VPS Debian avec Nginx et MariaDB.", "tags": ["ASP.NET Core", "C#", "MariaDB", "JWT", "Nginx"] },
+  { "title": "FireSecurityShop Web", "kind": "Application web", "url": "https://firesecurityshoprdl-web.vercel.app/", "color": "#ff6b8b", "desc": "Interface React + Vite d'une boutique de sécurité incendie : produits, commandes et utilisateurs branchés sur l'API REST.", "tags": ["React", "Vite", "SCSS", "REST API"] },
+  { "title": "Oceario", "kind": "Site immersif", "url": "https://oceario-site.vercel.app/", "color": "#5cb8ff", "desc": "Site d'une entreprise aquatique : design immersif, animations fluides et expérience utilisateur soignée.", "tags": ["React", "Next.js", "SCSS", "Animations"] }
+]

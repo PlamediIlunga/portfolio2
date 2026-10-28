@@ -2,7 +2,11 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, animate, useInView, useScroll, useTransform } from "framer-motion";
 import { Split, Reveal, Magnetic } from "./UI";
-import { me, projects, skills, experience } from "./data";
+import me from "../data/profile.json";
+import projects from "../data/projects.json";
+import skills from "../data/skills.json";
+import experience from "../data/experience.json";
+import ongoingProjects from "../data/ongoing-projects.json";
 
 const ease = [0.16, 1, 0.3, 1];
 
@@ -122,6 +126,25 @@ export function Projects() {
   );
 }
 
+export function OngoingProjects() {
+  return (
+    <section id="ongoing" className="sec ongoing">
+      <h2><Split text="Ce que je construis en ce moment." /></h2>
+      <div className="ongoing__grid">
+        {ongoingProjects.map((project, index) => (
+          <Reveal key={project.name} delay={index * 0.08} className="ongoing__card">
+            <div className="ongoing__top"><span className="pill"><i />{project.status}</span><span>{String(index + 1).padStart(2, "0")}</span></div>
+            <h3>{project.name}</h3>
+            <p>{project.description}</p>
+            {project.tags.length > 0 && <ul>{project.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>}
+            {project.url && <a href={project.url} target="_blank" rel="noreferrer" className="ongoing__link">Voir le projet <span>↗</span></a>}
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function Skills() {
   const all = skills.flatMap((s) => s.items);
   const row = (list, rev) => (
@@ -165,20 +188,27 @@ export function Experience() {
 }
 
 export function Contact() {
-  const [sent, setSent] = useState(false);
-  const submit = (e) => {
+  const [state, setState] = useState({ type: "idle", message: "" });
+  const submit = async (e) => {
     e.preventDefault();
-    const f = new FormData(e.target);
-    const body = `${f.get("message")}\n\n— ${f.get("name")} (${f.get("email")})`;
-    window.location.href = `mailto:${me.email}?subject=${encodeURIComponent("Contact depuis ton portfolio")}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    const form = e.currentTarget;
+    setState({ type: "sending", message: "Envoi en cours…" });
+    try {
+      const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(new FormData(form))) });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "L’envoi a échoué.");
+      form.reset();
+      setState({ type: "success", message: "Message envoyé. Merci, je reviens vers vous rapidement." });
+    } catch (error) {
+      setState({ type: "error", message: error.message || "Impossible d’envoyer le message pour le moment." });
+    }
   };
   return (
     <section id="contact" className="sec contact">
       <h2 className="giant"><Split text="Parlons de votre projet." /></h2>
       <div className="contact__grid">
         <Reveal>
-          <Magnetic><a className="mail" href={`mailto:${me.email}`}>{me.email}</a></Magnetic>
+          {me.email && <Magnetic><a className="mail" href={`mailto:${me.email}`}>{me.email}</a></Magnetic>}
           <p className="muted">{me.phone} · Québec, Canada</p>
           <div className="contact__links">
             <a href={me.github} target="_blank" rel="noreferrer">GitHub</a>
@@ -190,8 +220,10 @@ export function Contact() {
           <form onSubmit={submit}>
             <label>Nom<input name="name" required autoComplete="name" /></label>
             <label>Courriel<input name="email" type="email" required autoComplete="email" /></label>
-            <label>Message<textarea name="message" rows={4} required /></label>
-            <button className="btn" type="submit">{sent ? "Ouverture de votre messagerie…" : "Envoyer le message"}</button>
+            <label>Message<textarea name="message" rows={4} minLength={10} required /></label>
+            <input className="honeypot" name="website" tabIndex="-1" autoComplete="off" aria-hidden="true" />
+            <button className="btn" type="submit" disabled={state.type === "sending"}>{state.type === "sending" ? "Envoi en cours…" : "Envoyer le message"}</button>
+            <p className={`form-status ${state.type}`} role="status">{state.message}</p>
           </form>
         </Reveal>
       </div>
